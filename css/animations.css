@@ -1,0 +1,104 @@
+/* animations.css — smoke, glow, GSAP assist classes */
+
+.layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transform-origin: center;
+}
+
+.bg-deep {
+    background:
+        radial-gradient(ellipse at center, rgba(229, 9, 20, 0.06), transparent 30%),
+        url("https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=2000&auto=format&fit=crop") center/cover no-repeat;
+    opacity: 0.55;
+    filter: blur(20px) saturate(.8);
+    mix-blend-mode: multiply;
+}
+
+.bg-mid {
+    background: linear-gradient(90deg, rgba(10, 10, 10, 0.5), rgba(0, 0, 0, 0.8));
+}
+
+.bg-foreground {
+    background:
+        radial-gradient(600px 300px at 10% 20%, rgba(229, 9, 20, 0.06), transparent 10%),
+        radial-gradient(600px 300px at 90% 80%, rgba(229, 9, 20, 0.06), transparent 20%);
+    mix-blend-mode: screen;
+    filter: blur(20px);
+}
+
+.smoke {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    z-index: 12;
+}
+
+.puff {
+    position: absolute;
+    width: 38vmax;
+    height: 38vmax;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+    background:
+        radial-gradient(circle, rgba(229, 9, 20, 0.25), transparent 40%),
+        radial-gradient(circle, rgba(0, 0, 0, 0.25), transparent 50%);
+    filter: blur(40px);
+    animation: smokeFloat 22s ease-in-out infinite;
+    opacity: 0.5;
+}
+
+.p2 {
+    left: 20%;
+    top: 70%;
+    width: 50vmax;
+    height: 50vmax;
+    animation-duration: 28s;
+    opacity: 0.4;
+}
+
+.p3 {
+    left: 80%;
+    top: 60%;
+    width: 45vmax;
+    height: 45vmax;
+    animation-duration: 25s;
+    opacity: 0.35;
+}
+
+@keyframes smokeFloat {
+    0% {
+        transform: translate(-50%, -50%) scale(0.98);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: translate(-50%, -48%) scale(1.05);
+        opacity: 0.75;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(0.98);
+        opacity: 0.45;
+    }
+}
+
+/* =========================================================
+   ENTRY FADE-IN ANIMATIONS (Netflix-style)
+   ========================================================= */
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
+}

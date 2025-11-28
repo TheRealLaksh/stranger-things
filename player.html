@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stranger Things — Player</title>
+    <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
+
+    <!-- Styles (existing) -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/player.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+    <!-- TOP-LEFT BACK ARROW -->
+    <button id="backButtonTop" aria-label="Back to library" class="back-arrow">
+        ←
+    </button>
+
+    <!-- PLAYER WRAPPER -->
+    <div class="player-wrapper">
+
+        <!-- Title Overlay -->
+        <div class="player-header fade-up">
+            <h1 id="episodeTitle">Episode</h1>
+            <p id="episodeMeta">Now Playing</p>
+        </div>
+
+        <!-- VIDEO ELEMENT -->
+        <div class="video-container">
+            <video id="videoPlayer" class="video" preload="auto">
+                <source id="videoSource" src="" type="video/*">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+
+        <!-- CONTROLS -->
+        <div class="controls-container" id="controls">
+
+            <div class="control-row top-controls">
+                <div class="left-top">
+                    <button id="backButton" class="ctrl-btn small-btn">Back</button>
+                </div>
+                <div class="right-top">
+                    <span id="currentTime">0:00</span>
+                </div>
+                
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-hover" id="progressHover">0:00</div>
+                <div class="progress-bar" id="progressBar">
+                    <div class="progress-buffer" id="progressBuffer"></div>
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="control-row bottom-controls">
+                <button id="playPause" class="ctrl-btn big-btn" aria-label="Play">▶</button>
+
+                <button id="muteBtn" class="ctrl-btn" aria-label="Mute">🔊</button>
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.8">
+
+                <div class="right-controls">
+                    <button id="speedBtn" class="ctrl-btn" aria-label="Playback speed">1x</button>
+                    <button id="fullscreenBtn" class="ctrl-btn" aria-label="Fullscreen">⛶</button>
+                    <button id="nextEpBtn" class="ctrl-btn" aria-label="Next episode">Next Episode →</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/app.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+
+</html>

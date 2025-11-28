@@ -1,0 +1,344 @@
+/* =========================================================
+   NAVBAR + LOGO + LINKS
+   ========================================================= */
+
+.netflix-logo {
+    width: 85px;
+    cursor: pointer;
+    filter: drop-shadow(0 6px 18px rgba(229, 9, 20, 0.25));
+}
+
+.nav-link {
+    position: relative;
+    color: #e5e5e5;
+    font-size: 0.95rem;
+    transition: 0.25s ease;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    width: 40%;
+    height: 2px;
+    background: var(--red);
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: 0.25s ease;
+}
+
+.nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn-primary {
+    background: var(--red);
+    color: #fff !important;
+    padding: 0.65rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #b50710;
+}
+
+.btn-ghost {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: transparent;
+    color: white;
+    padding: 0.65rem 1rem;
+    border-radius: 0.5rem;
+    transition: 0.3s ease;
+}
+
+.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+
+/* =========================================================
+   HERO SECTION
+   ========================================================= */
+
+.hero-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.5));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 2.5rem;
+    border-radius: 12px;
+    max-width: 900px;
+    width: calc(100% - 1rem);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    z-index: 20;
+}
+
+.hero-title {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    text-shadow: 0 0 20px rgba(229, 9, 20, 0.2);
+}
+
+.hero-sub {
+    margin-top: 1rem;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #c4c4c4;
+}
+
+.hero-buttons {
+    margin-top: 1.7rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+
+/* =========================================================
+   POSTER GRID
+   ========================================================= */
+
+.poster-strip {
+    padding: 4rem 0 5rem;
+}
+
+.poster-section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.poster-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1.5rem;
+}
+
+.poster-card {
+    overflow: hidden;
+    border-radius: 8px;
+    background: #0a0a0a;
+    transition: 0.4s ease;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+}
+
+.poster-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+.poster-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+    margin-top: 3rem;
+    text-align: center;
+    color: #777;
+    padding-bottom: 3rem;
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   EPISODES GRID (FINAL VERSION)
+   Always show all details, only Play button on hover
+   ========================================================= */
+
+/* GRID LAYOUT */
+.episode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* Episode Card — Grid Style */
+.episode-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #0a0a0a;
+    transition: transform 0.25s ease;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Thumbnail (static, always shown) */
+.episode-thumb {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+/* Episode details — ALWAYS visible */
+.episode-overlay {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #0a0a0a;
+    height: 100%;
+    opacity: 1;
+    position: relative;
+}
+
+/* Text styles */
+.episode-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+}
+
+.episode-meta {
+    font-size: 0.85rem;
+    color: #ccc;
+    margin-top: 4px;
+}
+
+.episode-desc {
+    font-size: 0.8rem;
+    color: #b3b3b3;
+    margin-top: 6px;
+    line-height: 1.25rem;
+}
+
+/* Play button — hidden normally */
+.play-btn {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--red);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: 0.3s ease;
+}
+
+/* Show play button on hover ONLY */
+.episode-card:hover .play-btn {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* =========================================================
+   EPISODE CARD — Enhanced Hover Animations
+   ========================================================= */
+
+/* Slight grow + shadow bloom */
+.episode-card {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 0 0 rgba(0,0,0,0.4);
+}
+
+.episode-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.6);
+}
+
+/* Thumbnail glossy hover dim */
+.episode-card:hover .episode-thumb {
+  filter: brightness(0.45);
+}
+
+/* Title Glow on hover */
+.episode-card:hover .episode-title {
+  text-shadow: 0 0 15px rgba(255,255,255,0.45);
+}
+
+/* Subtle floating effect */
+.episode-card {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    opacity 0.4s ease;
+}
+
+.play-btn {
+  transition:
+    opacity 0.35s ease,
+    transform 0.3s ease;
+}
+/* =========================================================
+   Tubelight Netflix Navbar (HTML/CSS version)
+   ========================================================= */
+
+.tube-nav {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: fit-content;
+  height: 70px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  z-index: 100;
+  border-radius: 14px;
+}
+
+.tube-nav-list {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.tube-nav-item a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 0;
+  transition: color 0.25s ease;
+}
+
+.tube-nav-item a:hover {
+  color: white;
+}
+
+.tube-nav-item svg {
+  stroke: currentColor;
+}
+
+.tube-highlight {
+  position: absolute;
+  bottom: 6px;
+  height: 3px;
+  width: 50px;
+  background: var(--red);
+  border-radius: 6px;
+  transition: 0.35s ease;
+  box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+}
+
+/* Active tab */
+.tube-nav-item.active a {
+  color: white;
+  text-shadow: 0 0 6px rgba(255,255,255,0.4);
+}

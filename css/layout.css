@@ -1,0 +1,134 @@
+/* =========================================================
+   LAYOUT.CSS — GLOBAL STRUCTURE, SPACING, GRID, POSITIONING
+   Fully optimized
+   ========================================================= */
+
+/* Root Variables */
+:root {
+  --red: #e50914;
+  --bg: #000000;
+  --bg-soft: #0a0a0a;
+  --border-soft: rgba(255,255,255,0.08);
+}
+
+/* Body Defaults */
+body {
+  background: var(--bg);
+  color: white;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+/* -----------------------------
+   NAVBAR (POSITIONING ONLY)
+----------------------------- */
+.topbar {
+  height: 70px;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.nav-inner {
+  max-width: 1400px;
+  margin: auto;
+  height: 70px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* -----------------------------
+   PAGE CONTAINERS
+----------------------------- */
+.container {
+  max-width: 1400px;
+  margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+/* -----------------------------
+   HERO BACKDROP / PARALLAX
+----------------------------- */
+
+.hero-wrap {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+/* User will set these in theme file */
+.bg-deep,
+.bg-mid,
+.bg-foreground {
+  opacity: 0.5;
+}
+
+/* -----------------------------
+   GRID SYSTEM
+----------------------------- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+/* -----------------------------
+   FOOTER
+----------------------------- */
+.footer {
+  padding: 3rem;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 3rem;
+}
+
+/* -----------------------------
+   ANTI-SHIFT SMOOTHNESS
+----------------------------- */
+img,
+iframe {
+  transform: translateZ(0);
+}

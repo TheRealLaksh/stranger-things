@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stranger Things | Home</title>
+    <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/theme-netflix.css" />
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+<nav class="tube-nav">
+  <ul class="tube-nav-list">
+    <li class="tube-nav-item" data-name="Home">
+      <a href="index.html">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v9a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V12H9v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9z" />
+        </svg>
+        Home
+      </a>
+    </li>
+
+    <li class="tube-nav-item" data-name="Library">
+      <a href="library.html">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 4h13M3 9h13M3 14h13" />
+        </svg>
+        Library
+      </a>
+    </li>
+  </ul>
+
+  <div class="tube-highlight"></div>
+</nav>
+
+
+    <!-- HERO -->
+    <header class="hero-wrap">
+
+        <div class="layer bg-deep" data-speed="-0.3"></div>
+        <div class="layer bg-mid" data-speed="-0.12"></div>
+        <div class="layer bg-foreground" data-speed="0.06"></div>
+
+        <div class="smoke">
+            <div class="puff"></div>
+            <div class="puff p2"></div>
+            <div class="puff p3"></div>
+        </div>
+
+        <div class="hero-card text-center">
+            <h1 class="hero-title st-font st-glow">
+                Stranger Things — Season 5 <span class="text-netflix-red">Portal</span>
+            </h1>
+
+            <p class="hero-sub">
+                A cinematic Netflix-style portal for your *totally real* episodes.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="library.html" class="btn-primary">Open Library</a>
+                <a href="player.html" class="btn-ghost">Player</a>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- Posters -->
+    <section class="poster-strip container mx-auto px-6">
+        <h2 class="poster-section-title st-font">Posters & Visuals</h2>
+
+        <div class="poster-grid">
+            <div class="poster-card">
+                <img
+                    src="https://m.media-amazon.com/images/M/MV5BZjI3MDY1YmMtOWYzMS00NzQ4LTg4ZGQtZDM3YzI1Y2RhNTBhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg">
+            </div>
+
+            <div class="poster-card">
+                <img src="https://lumiere-a.akamaihd.net/v1/images/strangerthings_s5_banner_01_87b6a8b7.jpeg">
+            </div>
+
+            <div class="poster-card">
+                <img src="https://images-na.ssl-images-amazon.com/images/I/81F0gZWbXLL._AC_SL1500_.jpg">
+            </div>
+
+            <div class="poster-card">
+                <img
+                    src="https://m.media-amazon.com/images/M/MV5BZGJkMTNhZDAtY2Q3OC00NzE0LWI3NTYtZTVkNTVhNjVhNzFiXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg">
+            </div>
+
+            <div class="poster-card">
+                <img src="https://static.tvmaze.com/uploads/images/original_untouched/417/1044492.jpg">
+            </div>
+
+            <div class="poster-card">
+                <img src="https://image.tmdb.org/t/p/original/xWcE0R7wW7Qm2d6G7g0g4pQYQvW.jpg">
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        Stranger Things S5 — Fan-made UI.
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/parallax.js"></script>
+</body>
+
+</html>
