@@ -342,3 +342,10 @@
   color: white;
   text-shadow: 0 0 6px rgba(255,255,255,0.4);
 }
+#footer-title-wrap text {
+    letter-spacing: 4px;
+}
+
+#footer-title-wrap svg {
+    filter: drop-shadow(0 0 8px rgba(255,0,0,0.35));
+}
