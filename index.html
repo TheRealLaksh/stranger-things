@@ -25,31 +25,49 @@
 <body>
 
     <!-- NAVBAR -->
-<nav class="tube-nav">
-  <ul class="tube-nav-list">
-    <li class="tube-nav-item" data-name="Home">
-      <a href="index.html">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 9l9-7 9 7v9a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V12H9v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9z" />
-        </svg>
-        Home
-      </a>
-    </li>
-
-    <li class="tube-nav-item" data-name="Library">
-      <a href="library.html">
-        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 4h13M3 9h13M3 14h13" />
-        </svg>
-        Library
-      </a>
-    </li>
-  </ul>
-
-  <div class="tube-highlight"></div>
-</nav>
-
-
+    <nav class="tube-nav">
+        <ul class="tube-nav-list">
+            <li class="tube-nav-item" data-name="Home">
+                <a href="index.html">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M3 9l9-7 9 7v9a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V12H9v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9z" />
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li class="tube-nav-item" data-name="Library">
+                <a href="library.html">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 4h13M3 9h13M3 14h13" />
+                    </svg>
+                    Library
+                </a>
+            </li>
+            <li class="tube-nav-item" data-name="Characters">
+                <a href="characters.html">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    Characters
+                </a>
+            </li>
+            <li class="tube-nav-item" data-name="Theories">
+                <a href="theories.html">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"></path>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                    </svg>
+                    Theories
+                </a>
+            </li>
+        </ul>
+        <div class="tube-highlight"></div>
+    </nav>
     <!-- HERO -->
     <header class="hero-wrap">
 
@@ -81,99 +99,189 @@
 
     <!-- FOOTER -->
 
-    <footer class="relative w-full bg-black border-t border-red-900/40 overflow-hidden pt-16 pb-20">
+    <footer class="relative w-full bg-black border-t-4 border-double border-red-900 overflow-hidden pt-20 pb-10 group">
 
-    <!-- Upside-Down red glow -->
-    <div class="absolute inset-0 opacity-40 pointer-events-none"
-        style="background: radial-gradient(circle at 50% 20%, rgba(255,0,0,0.15), rgba(0,0,0,1) 70%);">
+    <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden spore-container">
+        <div class="spore s1"></div><div class="spore s2"></div><div class="spore s3"></div>
+        <div class="spore s4"></div><div class="spore s5"></div><div class="spore s6"></div>
+    </div>
+
+    <div class="absolute top-0 left-0 w-full h-2 flex justify-around opacity-70 z-10">
+        <div class="bulb red"></div><div class="bulb blue"></div><div class="bulb yellow"></div>
+        <div class="bulb red"></div><div class="bulb green"></div><div class="bulb blue"></div>
+        <div class="bulb yellow"></div><div class="bulb red"></div><div class="bulb green"></div>
+    </div>
+
+    <div class="absolute inset-0 opacity-20 pointer-events-none animate-pulse-slow"
+         style="background: radial-gradient(circle at 50% 100%, rgba(229,9,20,0.4), transparent 70%);">
     </div>
 
     <div class="relative z-10 max-w-7xl mx-auto px-6 flex flex-col items-center">
 
-        <!-- 3-column layout -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 w-full mb-16 text-center md:text-left">
 
-            <!-- Column 1 -->
-            <div class="space-y-4">
-                <h2 class="text-3xl font-bold text-red-500 tracking-wide">Stranger Things</h2>
-                <p class="text-sm text-red-200/70 leading-relaxed">
+            <div class="space-y-4 relative">
+                <h2 class="text-3xl font-bold text-red-600 tracking-widest st-font glitch-hover" data-text="STRANGER THINGS">
+                    STRANGER THINGS
+                </h2>
+                <p class="text-sm text-gray-400 leading-relaxed hover:text-red-200 transition-colors duration-500">
                     A portal to the Upside Down, lurking with mysteries that should have stayed closed.
+                    <br><span class="text-xs text-red-900 italic">Watch your back.</span>
                 </p>
             </div>
 
-            <!-- Column 2 -->
-            <div>
-                <h3 class="text-white font-semibold mb-4">Explore</h3>
-                <ul class="space-y-3 text-sm text-red-200/70">
-                    <li><a href="index.html" class="hover:text-red-400 transition-colors">Home</a></li>
-                    <li><a href="library.html" class="hover:text-red-400 transition-colors">Episodes</a></li>
-                    <li><a href="#" class="hover:text-red-400 transition-colors">Behind the Scenes</a></li>
-                    <li><a href="#" class="hover:text-red-400 transition-colors">Characters</a></li>
-                    <li><a href="#" class="hover:text-red-400 transition-colors">Theories</a></li>
+            <div class="fade-in-stagger">
+                <h3 class="text-white font-semibold mb-4 border-b border-red-900 inline-block pb-1">EXPLORE</h3>
+                <ul class="space-y-3 text-sm text-gray-400">
+                    <li><a href="index.html" class="nav-item">Home</a></li>
+                    <li><a href="library.html" class="nav-item">Episodes</a></li>
+                    <li><a href="characters.html" class="nav-item">Characters</a></li>
+                    <li><a href="theories.html" class="nav-item">Theories</a></li>
                 </ul>
             </div>
 
-            <!-- Column 3 -->
-            <div class="flex flex-col items-center md:items-start">
-                <h3 class="text-white font-semibold mb-4">Connect</h3>
+            <div class="flex flex-col items-center md:items-start fade-in-stagger delay-100">
+                <h3 class="text-white font-semibold mb-4 border-b border-red-900 inline-block pb-1">CONNECT</h3>
 
-                <div class="flex items-center gap-4 mb-6">
+                <div class="flex items-center gap-6 mb-6">
                     <a href="https://github.com/TheRealLaksh" target="_blank"
-                        class="text-red-300 hover:text-red-500 transition-colors">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2.1c-3.2.7-3.9-1.5-3.9-1.5-.5-1.2-1.1-1.6-1.1-1.6-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.5 1.1 3.1.8.1-.7.4-1.1.7-1.4-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.1-3.3-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.4 1.2a11.5 11.5 0 0 1 6.2 0c2.5-1.5 3.4-1.2 3.4-1.2.6 1.6.2 2.8.1 3.1.7.9 1.1 2 1.1 3.3 0 4.6-2.8 5.6-5.5 5.9.4.3.8 1 .8 2v3c0 .4.2.7.8.6 4.6-1.5 7.9-5.9 7.9-10.9C23.5 5.65 18.35.5 12 .5z" />
-                        </svg>
+                       class="social-icon text-red-500 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2.1c-3.2.7-3.9-1.5-3.9-1.5-.5-1.2-1.1-1.6-1.1-1.6-.9-.6.1-.6.1-.6 1 .1 1.6 1 1.6 1 .9 1.6 2.5 1.1 3.1.8.1-.7.4-1.1.7-1.4-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.1-3.3-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.4 1.2a11.5 11.5 0 0 1 6.2 0c2.5-1.5 3.4-1.2 3.4-1.2.6 1.6.2 2.8.1 3.1.7.9 1.1 2 1.1 3.3 0 4.6-2.8 5.6-5.5 5.9.4.3.8 1 .8 2v3c0 .4.2.7.8.6 4.6-1.5 7.9-5.9 7.9-10.9C23.5 5.65 18.35.5 12 .5z" /></svg>
                     </a>
-                    <a href="https://www.linkedin.com/in/laksh-pradhwani" target="_blank"
-                        class="text-red-300 hover:text-red-500 transition-colors">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                            <rect x="2" y="9" width="4" height="12"></rect>
-                            <circle cx="4" cy="4" r="2"></circle>
-                        </svg>
+
+                    <a href="https://www.instagram.com/_.lakshp" target="_blank"
+                       class="social-icon text-red-500 hover:text-white transition-colors">
+                       <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                           <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM18.75 6.5a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/>
+                       </svg>
                     </a>
-                    <a href="mailto:contact@lakshp.live"
-                        class="text-red-300 hover:text-red-500 transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24">
-                            <path d="M4 4h16v16H4z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                        </svg>
+
+                    <a href="mailto:contact@lakshp.live" class="social-icon text-red-500 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                     </a>
                 </div>
             </div>
-
         </div>
 
-        <!-- Animated Stranger Things text -->
-        <div class="w-full h-40 relative flex items-center justify-center select-none" id="footer-title-wrap">
-            <svg class="w-full h-full" viewBox="0 0 300 100" preserveAspectRatio="xMidYMid meet">
-                <defs>
-                    <linearGradient id="stGradient">
-                        <stop offset="0%" stop-color="#ff0000" />
-                        <stop offset="100%" stop-color="#990000" />
-                    </linearGradient>
-                </defs>
-
+        <div class="w-full h-32 relative flex items-center justify-center select-none overflow-hidden" id="footer-title-wrap">
+            <svg class="w-full h-full max-w-4xl" viewBox="0 0 600 100">
                 <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
-                    class="text-6xl font-bold fill-transparent stroke-red-900 opacity-60">
+                    class="text-6xl font-bold fill-transparent stroke-red-600 stroke-2 animate-stroke-draw opacity-50 st-font">
                     STRANGER THINGS
                 </text>
-
                 <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle"
-                    class="text-6xl font-bold fill-transparent stroke-[url(#stGradient)] animate-pulse">
+                    class="text-6xl font-bold fill-red-600 opacity-0 animate-flicker-text st-font">
                     STRANGER THINGS
                 </text>
             </svg>
         </div>
 
-        <!-- Bottom strip -->
-        <div class="border-t border-red-900/40 w-full pt-6 text-center text-xs text-red-300/60">
-            <p>© 2025 Stranger Things Fan Site. Beware the Upside Down.</p>
+        <div class="border-t border-red-900/30 w-full pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-red-400/50">
+            
+            <div class="mb-4 md:mb-0 transform hover:scale-110 transition-transform duration-300">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" 
+                     alt="Netflix" class="h-6 opacity-60 hover:opacity-100 transition-opacity">
+            </div>
+
+            <p class="hover:text-red-500 transition-colors cursor-crosshair">
+                © 2025 Stranger Things Fan Site. 
+                <span class="animate-pulse">Beware the Upside Down.</span>
+            </p>
         </div>
 
     </div>
+
+    <style>
+        /* Spores (Particles) */
+        .spore {
+            position: absolute;
+            background: #aaa;
+            border-radius: 50%;
+            opacity: 0.6;
+            filter: blur(1px);
+            animation: float 10s infinite ease-in-out;
+        }
+        .s1 { width: 4px; height: 4px; top: 80%; left: 10%; animation-duration: 12s; }
+        .s2 { width: 2px; height: 2px; top: 60%; left: 80%; animation-duration: 8s; animation-delay: 1s; }
+        .s3 { width: 3px; height: 3px; top: 40%; left: 30%; animation-duration: 15s; animation-delay: 2s; }
+        .s4 { width: 2px; height: 2px; top: 90%; left: 60%; animation-duration: 9s; }
+        .s5 { width: 4px; height: 4px; top: 20%; left: 90%; animation-duration: 14s; background: var(--red); }
+        .s6 { width: 3px; height: 3px; top: 50%; left: 5%;  animation-duration: 11s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            50% { transform: translate(20px, -40px) scale(1.2); opacity: 0.8; }
+        }
+
+        /* Bulb Flicker */
+        .bulb { width: 8px; height: 8px; border-radius: 50%; margin: 0 10px; animation: flicker 2s infinite; }
+        .bulb.red { background: #ff0000; box-shadow: 0 0 5px #ff0000; }
+        .bulb.blue { background: #0000ff; box-shadow: 0 0 5px #0000ff; animation-delay: 0.3s; }
+        .bulb.green { background: #00ff00; box-shadow: 0 0 5px #00ff00; animation-delay: 0.7s; }
+        .bulb.yellow { background: #ffff00; box-shadow: 0 0 5px #ffff00; animation-delay: 1.1s; }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; filter: brightness(1.5); }
+            52% { opacity: 0.3; }
+            54% { opacity: 0.8; }
+        }
+
+        /* Link Hover Slide */
+        .nav-item { position: relative; display: inline-block; transition: all 0.3s; }
+        .nav-item::before {
+            content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 0;
+            background-color: var(--red); transition: width 0.3s;
+        }
+        .nav-item:hover { color: #fff; padding-left: 5px; text-shadow: 0 0 5px var(--red); }
+        .nav-item:hover::before { width: 100%; }
+
+        /* Glitch Effect */
+        .glitch-hover:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: #fff;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        /* Social Icon Hover */
+        .social-icon:hover {
+            filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8));
+            transform: translateY(-3px) rotate(5deg);
+        }
+
+        /* Text Stroke Animation */
+        .animate-stroke-draw {
+            stroke-dasharray: 100%;
+            stroke-dashoffset: 100%;
+            animation: draw 4s linear infinite alternate;
+        }
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Text Flicker */
+        .animate-flicker-text {
+            animation: textFlicker 3s infinite alternate;
+        }
+        @keyframes textFlicker {
+            0%, 80% { opacity: 0; }
+            81% { opacity: 0.8; }
+            82% { opacity: 0; }
+            83% { opacity: 0.5; }
+            100% { opacity: 0; }
+        }
+
+        /* Pulse Slow */
+        .animate-pulse-slow { animation: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+    </style>
 </footer>
 
 

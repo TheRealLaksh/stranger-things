@@ -4,28 +4,134 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Stranger Things S5 | Episodes </title>
+    <title>Stranger Things S5 | Fan Theories</title>
     <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
 
-    <!-- Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
 
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/layout.css" />
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/animations.css" />
     <link rel="stylesheet" href="css/theme-netflix.css" />
+
+    <style>
+        /* --- PAGE SPECIFIC STYLES: DARK EVIDENCE BOARD --- */
+
+        /* Background */
+        body {
+            background-color: #000;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 1), #000 80%),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path d="M0 0h40v40H0z" fill="none"/><path d="M0 39h40M39 0v40" stroke="%23222" stroke-width="1"/></svg>');
+            background-attachment: fixed;
+        }
+
+        .theory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            padding: 4rem 0;
+        }
+
+        /* The Theory Card (Dark Classified File) */
+        .theory-card {
+            background-color: #161616;
+            /* Dark Gray */
+            color: #e0e0e0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Subtle glow on hover instead of rotation */
+        .theory-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(229, 9, 20, 0.15);
+            /* Red glow */
+            border-color: rgba(229, 9, 20, 0.5);
+            z-index: 10;
+        }
+
+        /* Title */
+        .theory-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.6rem;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px rgba(229, 9, 20, 0.4);
+            line-height: 1.2;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Subheader */
+        .theory-sub {
+            font-size: 0.75rem;
+            color: #888;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Evidence List */
+        .theory-evidence {
+            list-style-type: none;
+            padding-left: 0;
+            margin-bottom: 2rem;
+        }
+
+        .theory-evidence li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        /* Red Bullet points */
+        .theory-evidence li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-size: 1rem;
+            top: 1px;
+        }
+
+        /* Assessment Box (Darker inset) */
+        .theory-assessment {
+            padding: 1rem;
+            background-color: #080808;
+            /* Very dark inset */
+            border-left: 3px solid var(--red);
+            font-size: 0.9rem;
+            color: #999;
+            font-style: italic;
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Highlight text inside assessment */
+        .theory-assessment strong {
+            color: #ddd;
+            font-weight: 600;
+        }
+    </style>
 </head>
 
-<body>
+<body class="text-white min-h-screen">
 
-    <!-- NAV -->
     <nav class="tube-nav">
         <ul class="tube-nav-list">
             <li class="tube-nav-item" data-name="Home">
@@ -56,7 +162,7 @@
                     Characters
                 </a>
             </li>
-            <li class="tube-nav-item" data-name="Theories">
+            <li class="tube-nav-item active" data-name="Theories">
                 <a href="theories.html">
                     <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"></path>
@@ -70,149 +176,81 @@
         <div class="tube-highlight"></div>
     </nav>
 
+    <div class="pt-32 pb-8 text-center px-6">
+        <h1 class="text-5xl md:text-6xl st-font st-glow mb-4">The Upside Down Conspiracy</h1>
+        <p class="text-gray-500 max-w-3xl mx-auto text-lg">
+            What if the gate never closed? Classified files and red-string theories on the end of the world.
+        </p>
+    </div>
 
+    <div class="container mx-auto px-6">
+        <div class="theory-grid">
 
-    <!-- EPISODE LIST -->
-    <div class="pt-28 px-6 max-w-4xl mx-auto">
-        <h1 class="text-4xl st-font text-white mb-6">Episodes</h1>
+            <div class="theory-card fade-up">
+                <span class="theory-sub">The Boy Who Connects the Worlds</span>
+                <h2 class="theory-title">Will Byers: The Horcrux</h2>
 
-        <div id="episodeList" class="episode-grid">
-
-            <!-- Episode 1 -->
-            <div class="episode-card fade-up" data-src="assets/episodes/ep1.mp4">
-
-                <img class="episode-thumb" src="assets/images/ep1.jpg">
-                <div class="episode-overlay">
-                    <div class="episode-title">Chapter One: The Crawl</div>
-                    <div class="episode-meta">Episode 1 • 1h 11m • Nov 26, 2025</div>
-                    <div class="episode-desc">
-                        In November 1987, the group evades the military to search the Upside Down
-                        for Vecna but fails to notice a new threat emerging closer to home—
-                        Vecna is already infiltrating Hawkins through children like Holly Wheeler.
-                    </div>
-                    <div class="play-btn">▶</div>
+                <ul class="theory-evidence">
+                    <li>Will was the first target and first survivor of the Demogorgon (Vecna's hand).</li>
+                    <li>He retains a psychic link to Vecna, often clutching the back of his neck.</li>
+                    <li>Vecna needed to create four gates, but Will's initial connection was the most profound and
+                        unique.</li>
+                </ul>
+                <div class="theory-assessment">
+                    <strong>Assessment:</strong> Will is not just bait; he is the key. To permanently defeat Vecna, the
+                    gang must sever this psychic link, perhaps by sacrificing the connection itself.
                 </div>
             </div>
 
-            <!-- Episode 2 -->
-            <div class="episode-card fade-up" data-src="assets/episodes/ep2.mp4">
+            <div class="theory-card fade-up">
+                <span class="theory-sub">November 6, 1983</span>
+                <h2 class="theory-title">The Time-Lock: El's Memory</h2>
 
-                <img class="episode-thumb" src="assets/images/ep2.jpg">
-                <div class="episode-overlay">
-                    <div class="episode-title">Chapter Two: The Vanishing of Holly Wheeler</div>
-                    <div class="episode-meta">Episode 2 • 57m • Nov 26, 2025</div>
-                    <div class="episode-desc">
-                        A Demogorgon attacks the Wheeler home, injuring Mike and Nancy’s parents
-                        and abducting Holly. Eleven follows it into the Upside Down and reunites with Hopper.
-                        Will realizes his visions are from Vecna’s perspective.
-                    </div>
-                    <div class="play-btn">▶</div>
+                <ul class="theory-evidence">
+                    <li>The Upside Down is inexplicably stuck on the date Will went missing.</li>
+                    <li>Vecna escaped to the UD *before* this date (1979) but the world reflects 1983.</li>
+                    <li>The dimension was 'molded' by the mind that first connected it to the real world: **Eleven**.
+                    </li>
+                </ul>
+                <div class="theory-assessment">
+                    <strong>Assessment:</strong> The Upside Down is a collective psychic projection. Eleven will need to
+                    confront her past in a final battle within the Mindscape to free the UD from its time prison.
                 </div>
             </div>
 
-            <!-- Episode 3 -->
-            <div class="episode-card fade-up" data-src="assets/episodes/ep3.mp4">
+            <div class="theory-card fade-up">
+                <span class="theory-sub">A Hero's Final Act</span>
+                <h2 class="theory-title">The Death of The Babysitter</h2>
 
-                <img class="episode-thumb" src="assets/images/ep3.jpg">
-                <div class="episode-overlay">
-                    <div class="episode-title">Chapter Three: The Turnbow Trap</div>
-                    <div class="episode-meta">Episode 3 • 1h 09m • Nov 26, 2025</div>
-                    <div class="episode-desc">
-                        Will learns Vecna needs 12 children as “vessels.” The group uses Derek Turnbow
-                        as bait and transforms his home into a trap.
-                        Eleven and Hopper discover the military is holding Kali — not Vecna.
-                    </div>
-                    <div class="play-btn">▶</div>
+                <ul class="theory-evidence">
+                    <li>Steve Harrington has had a complete character redemption arc—he's ready to go.</li>
+                    <li>His Season 4 story involved him constantly protecting the younger crew (especially Dustin).</li>
+                    <li>The Duffer Brothers are notorious for killing off beloved characters who have completed their
+                        arcs.</li>
+                </ul>
+                <div class="theory-assessment">
+                    <strong>Assessment:</strong> This is a prediction based on storytelling structure. Steve will likely
+                    make a heroic sacrifice for the children, likely against a Demogorgon.
                 </div>
             </div>
 
-            <!-- Episode 4 -->
-            <div class="episode-card fade-up" data-src="assets/episodes/ep4.mp4">
+            <div class="theory-card fade-up">
+                <span class="theory-sub">Max's Inner World</span>
+                <h2 class="theory-title">Camazotz: The Mind Prison</h2>
 
-                <img class="episode-thumb" src="assets/images/ep4.jpg">
-                <div class="episode-overlay">
-                    <div class="episode-title">Chapter Four: Sorcerer</div>
-                    <div class="episode-meta">Episode 4 • 1h 26m • Nov 26, 2025</div>
-                    <div class="episode-desc">
-                        The military detains potential child victims.
-                        Vecna slaughters soldiers at the base.
-                        Will unlocks telekinetic powers similar to Eleven.
-                    </div>
-                    <div class="play-btn">▶</div>
-                </div>
-            </div>
-
-            <!-- Episode 5 -->
-            <div class="episode-card fade-up" data-src="assets/episodes/ep5.mp4">
-
-                <img class="episode-thumb" src="assets/images/ep5.jpg">
-                <div class="episode-overlay">
-                    <div class="episode-title">Chapter Five: Shock Jock</div>
-                    <div class="episode-meta">Episode 5 • ~90m • Dec 25, 2025</div>
-                    <div class="episode-desc">
-                        WSQK radio station may be used to disrupt Vecna’s influence.
-                        Dustin, Robin or Steve may broadcast a counter-signal.
-                    </div>
-                    <div class="play-btn">▶</div>
-                </div>
-            </div>
-
-            <!-- Episode 6 -->
-            <div class="episode-card fade-up" data-src="assets/episodes/ep6.mp4">
-
-                <img class="episode-thumb" src="assets/images/ep6.jpg">
-                <div class="episode-overlay">
-                    <div class="episode-title">Chapter Six: Escape from Camazotz</div>
-                    <div class="episode-meta">Episode 6 • TBA • Dec 25, 2025</div>
-                    <div class="episode-desc">
-                        The party enters Vecna’s psychic realm “Camazotz.” Max appears alive but trapped.
-                        They must rescue the children before Vecna completes his transformation.
-                    </div>
-                    <div class="play-btn">▶</div>
-                </div>
-            </div>
-
-            <!-- Episode 7 -->
-            <div class="episode-card fade-up" data-src="assets/episodes/ep7.mp4">
-
-                <img class="episode-thumb" src="assets/images/ep7.jpg">
-                <div class="episode-overlay">
-                    <div class="episode-title">Chapter Seven: The Bridge</div>
-                    <div class="episode-meta">Episode 7 • TBA • Dec 25, 2025</div>
-                    <div class="episode-desc">
-                        Eleven and Will synchronize powers to locate Holly.
-                        The group prepares for the final confrontation with Vecna.
-                    </div>
-                    <div class="play-btn">▶</div>
-                </div>
-            </div>
-
-            <!-- Episode 8 -->
-            <div class="episode-card fade-up" data-src="assets/episodes/ep8.mp4">
-
-                <img class="episode-thumb" src="assets/images/ep8.jpg">
-                <div class="episode-overlay">
-                    <div class="episode-title">Chapter Eight: The Rightside Up</div>
-                    <div class="episode-meta">Episode 8 • 2h • Dec 31, 2025</div>
-                    <div class="episode-desc">
-                        Eleven defeats Vecna, Hawkins heals, quarantines lift,
-                        and the world returns to balance — the “Rightside Up.”
-                    </div>
-                    <div class="play-btn">▶</div>
+                <ul class="theory-evidence">
+                    <li>Max is comatose, but her consciousness is trapped in Vecna's mindscape (Camazotz).</li>
+                    <li>Holly Wheeler's new friend, "Mr. Whatsit," is Vecna operating inside the human world.</li>
+                    <li>Max's mind could be a "backdoor" into Vecna's world, allowing Eleven to invade his mind.</li>
+                </ul>
+                <div class="theory-assessment">
+                    <strong>Assessment:</strong> Max’s mind is the primary battlefield for Volume 2. She holds the key
+                    to the villain's inner weakness, forcing a psychic rescue mission.
                 </div>
             </div>
 
         </div>
-
     </div>
-
-    <!-- JS -->
-    <script src="js/app.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/parallax.js"></script>
-    <script src="js/library.js"></script>
-
-</body>
 <footer class="relative w-full bg-black border-t-4 border-double border-red-900 overflow-hidden pt-20 pb-10 group">
 
     <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden spore-container">
@@ -397,6 +435,8 @@
 
     </style>
 </footer>
-
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+</body>
 
 </html>
