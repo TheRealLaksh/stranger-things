@@ -1,8 +1,26 @@
 /* --- HOMEPAGE SPECIFIC STYLES --- */
 
+/* 0. GLOBAL SETUP */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: #050505;
     overflow-x: hidden;
+}
+
+/* Film Grain Overlay */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.05;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 /* 1. HERO & RIFT */
@@ -23,7 +41,7 @@ body {
     background: url('../assets/images/main.jpg') center/cover no-repeat;
     filter: brightness(0.6) contrast(1.2);
     z-index: 0;
-    transition: transform 0.2s ease-out;
+    will-change: transform;
 }
 
 .vignette {
@@ -50,6 +68,7 @@ body {
     gap: 4rem;
     padding: 0 10vw;
     width: max-content;
+    will-change: transform;
 }
 
 .h-card {
@@ -60,14 +79,15 @@ body {
     border-radius: 8px;
     overflow: hidden;
     transform: scale(0.95);
-    transition: transform 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
     border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
 }
 
 .h-card:hover {
-    transform: scale(1.05) translateY(-10px);
+    transform: scale(1.05) translateY(-15px);
     z-index: 10;
-    box-shadow: 0 20px 40px rgba(229, 9, 20, 0.3);
+    box-shadow: 0 25px 50px rgba(229, 9, 20, 0.3);
     border-color: var(--red);
 }
 
@@ -75,6 +95,11 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.h-card:hover img {
+    transform: scale(1.1);
 }
 
 /* 3. VECNA PARALLAX */
@@ -89,16 +114,20 @@ body {
 
 .threat-bg {
     position: absolute;
-    inset: 0;
+    inset: -100px;
     background: url('../assets/images/characters/vecna.jpg') center/cover no-repeat;
     z-index: 0;
 }
 
-/* 4. POLAROID TAPES */
+/* 4. LOST TAPES (EVIDENCE CARDS) - REDESIGNED */
 .polaroid-section {
     padding: 8rem 2rem;
-    background: #111;
+    background: #080808; /* Darker background */
     position: relative;
+    /* subtle grid pattern */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
 }
 
 .polaroid-grid {
@@ -111,28 +140,58 @@ body {
 }
 
 .polaroid {
-    background: #fff;
-    padding: 1rem 1rem 3rem 1rem;
-    color: #000;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    transform: rotate(var(--r));
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* DEFAULT STATE: Hidden slightly for JS animation, but default to visible if JS fails */
+    opacity: 0; 
+    transform: translateY(50px) rotate(var(--r));
+    
+    background: #1a1a1a; /* Dark Card */
+    padding: 12px 12px 40px 12px;
+    color: #e0e0e0;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.8);
     width: 280px;
     cursor: pointer;
+    will-change: transform, opacity;
+    border: 1px solid #333;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+/* "Paper Clip" Visual */
+.polaroid::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 40px;
+    background: #333;
+    border-radius: 10px;
+    border: 2px solid #555;
+    z-index: 5;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
 .polaroid:hover {
-    transform: scale(1.1) rotate(0deg) !important;
+    transform: scale(1.05) rotate(0deg) translateY(-10px) !important;
     z-index: 20;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+    box-shadow: 0 0 30px rgba(229, 9, 20, 0.2);
+    border-color: var(--red);
+    background: #222;
 }
 
 .polaroid img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border: 1px solid #ddd;
-    filter: sepia(0.3) contrast(1.1);
+    border: 1px solid #333;
+    filter: sepia(0.2) grayscale(0.4) contrast(1.1);
+    transition: filter 0.3s ease;
+}
+
+.polaroid:hover img {
+    filter: sepia(0) grayscale(0) contrast(1.2);
+    border-color: #555;
 }
 
 .polaroid span {
@@ -141,20 +200,15 @@ body {
     display: block;
     margin-top: 1rem;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--red); /* Red text for the spooky vibe */
+    text-transform: uppercase;
 }
 
 /* --- FOOTER ANIMATIONS --- */
-
-/* Spores (Particles) */
-.spore {
-    position: absolute;
-    background: #aaa;
-    border-radius: 50%;
-    opacity: 0.6;
-    filter: blur(1px);
-    animation: float 10s infinite ease-in-out;
-}
+/* (Same as before, preserved) */
+.spore { position: absolute; background: #aaa; border-radius: 50%; opacity: 0.6; filter: blur(1px); animation: float 10s infinite ease-in-out; }
 .s1 { width: 4px; height: 4px; top: 80%; left: 10%; animation-duration: 12s; }
 .s2 { width: 2px; height: 2px; top: 60%; left: 80%; animation-duration: 8s; animation-delay: 1s; }
 .s3 { width: 3px; height: 3px; top: 40%; left: 30%; animation-duration: 15s; animation-delay: 2s; }
@@ -167,7 +221,6 @@ body {
     50% { transform: translate(20px, -40px) scale(1.2); opacity: 0.8; }
 }
 
-/* Bulb Flicker */
 .bulb { width: 8px; height: 8px; border-radius: 50%; margin: 0 10px; animation: flicker 2s infinite; }
 .bulb.red { background: #ff0000; box-shadow: 0 0 5px #ff0000; }
 .bulb.blue { background: #0000ff; box-shadow: 0 0 5px #0000ff; animation-delay: 0.3s; }
@@ -181,56 +234,20 @@ body {
     54% { opacity: 0.8; }
 }
 
-/* Link Hover Slide */
 .nav-item { position: relative; display: inline-block; transition: all 0.3s; }
-.nav-item::before {
-    content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 0;
-    background-color: var(--red); transition: width 0.3s;
-}
+.nav-item::before { content: ''; position: absolute; width: 0; height: 1px; bottom: 0; left: 0; background-color: var(--red); transition: width 0.3s; }
 .nav-item:hover { color: #fff; padding-left: 5px; text-shadow: 0 0 5px var(--red); }
 .nav-item:hover::before { width: 100%; }
 
-/* Glitch Effect */
-.glitch-hover:hover {
-    animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-    color: #fff;
-}
+.glitch-hover:hover { animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; color: #fff; }
 @keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
+    0% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } 100% { transform: translate(0); }
 }
 
-/* Social Icon Hover */
-.social-icon:hover {
-    filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8));
-    transform: translateY(-3px) rotate(5deg);
-}
-
-/* Text Stroke Animation */
-.animate-stroke-draw {
-    stroke-dasharray: 100%;
-    stroke-dashoffset: 100%;
-    animation: draw 4s linear infinite alternate;
-}
-@keyframes draw {
-    to { stroke-dashoffset: 0; }
-}
-
-/* Text Flicker */
-.animate-flicker-text {
-    animation: textFlicker 3s infinite alternate;
-}
-@keyframes textFlicker {
-    0%, 80% { opacity: 0; }
-    81% { opacity: 0.8; }
-    82% { opacity: 0; }
-    83% { opacity: 0.5; }
-    100% { opacity: 0; }
-}
-
-/* Pulse Slow */
+.social-icon:hover { filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.8)); transform: translateY(-3px) rotate(5deg); }
+.animate-stroke-draw { stroke-dasharray: 100%; stroke-dashoffset: 100%; animation: draw 4s linear infinite alternate; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.animate-flicker-text { animation: textFlicker 3s infinite alternate; }
+@keyframes textFlicker { 0%, 80% { opacity: 0; } 81% { opacity: 0.8; } 82% { opacity: 0; } 83% { opacity: 0.5; } 100% { opacity: 0; } }
 .animate-pulse-slow { animation: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
