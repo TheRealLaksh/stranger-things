@@ -1,10 +1,7 @@
-/* player.js — Touch-gesture enhanced Netflix-style player */
+/* player.js — Gesture + A1 UI + fixes: spacebar + header fade */
 
 (() => {
-
-    /* -----------------------------------------------------
-       ELEMENTS
-    ----------------------------------------------------- */
+    /* ---- Elements ---- */
     const video = document.getElementById("videoPlayer");
     const source = document.getElementById("videoSource");
 
@@ -27,18 +24,17 @@
     const episodeTitleEl = document.getElementById("episodeTitle");
     const episodeMetaEl = document.getElementById("episodeMeta");
 
-    /* NEW Gesture zones */
     const gLeft = document.getElementById("gesture-left");
-    const gRight = document.getElementById("gesture-right");
     const gCenter = document.getElementById("gesture-center");
+    const gRight = document.getElementById("gesture-right");
     const gestureFeedback = document.getElementById("gestureFeedback");
 
-    if (!video || !source) return;
+    if (!video || !source) {
+        console.error("player: missing video or source");
+        return;
+    }
 
-
-    /* -----------------------------------------------------
-       META + EPISODE NAME
-    ----------------------------------------------------- */
+    /* ---- Episode metadata ---- */
     const episodeNames = {
         1: "The Crawl",
         2: "The Vanishing of Holly Wheeler",
@@ -54,111 +50,132 @@
     let rawSrc = params.get("src");
 
     if (rawSrc) {
-        try { rawSrc = decodeURIComponent(rawSrc); } catch { }
+        try { rawSrc = decodeURIComponent(rawSrc); } catch {}
         if (rawSrc.endsWith(".mkv")) rawSrc = rawSrc.replace(".mkv", ".mp4");
-
         source.src = rawSrc;
         source.type = "video/mp4";
-
         video.load();
         video.addEventListener("loadedmetadata", () => {
             currentTimeEl.textContent = "0:00 / " + formatTime(video.duration);
             safePlay();
         });
+    } else {
+        // fallback
+        currentTimeEl.textContent = "0:00 / 0:00";
     }
 
     const epMatch = rawSrc ? rawSrc.match(/ep(\d+)/i) : null;
     const episodeNum = epMatch ? parseInt(epMatch[1], 10) : 1;
-
     episodeTitleEl.textContent = `Episode ${episodeNum} — ${episodeNames[episodeNum] || ""}`;
     episodeMetaEl.textContent = "Now Playing";
 
-
-    /* -----------------------------------------------------
-       BASIC CONTROLS
-    ----------------------------------------------------- */
+    /* ---- Helpers ---- */
     function formatTime(sec) {
-        if (!isFinite(sec)) return "0:00";
+        if (!isFinite(sec) || isNaN(sec)) return "0:00";
         const m = Math.floor(sec / 60);
         const s = Math.floor(sec % 60).toString().padStart(2, "0");
         return `${m}:${s}`;
     }
-
     function safePlay() {
-        video.play().catch(() => { });
+        video.play().catch(()=>{});
     }
 
+    /* ---- Play/Pause UI toggle helper ---- */
     function updatePlayIcon() {
-        playPauseBtn.textContent = video.paused ? "▶" : "⏸";
+        const iconPlay = document.getElementById("iconPlay");
+        const iconPause = document.getElementById("iconPause");
+        if (!iconPlay || !iconPause) return;
+        if (video.paused) {
+            iconPlay.style.display = "";
+            iconPause.style.display = "none";
+        } else {
+            iconPlay.style.display = "none";
+            iconPause.style.display = "";
+        }
     }
 
-    playPauseBtn.onclick = () => {
-        video.paused ? video.play() : video.pause();
+    /* ---- Play/pause handlers ---- */
+    playPauseBtn.addEventListener("click", () => {
+        if (video.paused) video.play();
+        else video.pause();
         updatePlayIcon();
-    };
+        resetHideTimer();
+    });
 
     video.addEventListener("play", updatePlayIcon);
     video.addEventListener("pause", updatePlayIcon);
 
+    /* ---- Back buttons ---- */
+    const goBack = () => (location.href = "library.html");
+    backButton && backButton.addEventListener("click", goBack);
+    backButtonTop && backButtonTop.addEventListener("click", goBack);
 
-    /* BACK BUTTON */
-    const goBack = () => location.href = "library.html";
-    backButton.onclick = goBack;
-    backButtonTop.onclick = goBack;
-
-
-    /* VOLUME */
-    volumeSlider.oninput = e => {
-        const v = +e.target.value;
+    /* ---- Volume ---- */
+    volumeSlider && volumeSlider.addEventListener("input", (e) => {
+        const v = parseFloat(e.target.value);
         video.volume = v;
         video.muted = v === 0;
-        muteBtn.textContent = video.muted ? "🔇" : "🔊";
-    };
+        updateMuteIcon();
+        resetHideTimer();
+    });
 
-    muteBtn.onclick = () => {
+    function updateMuteIcon() {
+        const iconVol = document.getElementById("iconVol");
+        const iconMute = document.getElementById("iconMute");
+        if (!iconVol || !iconMute) return;
+        if (video.muted || video.volume === 0) {
+            iconVol.style.display = "none";
+            iconMute.style.display = "";
+        } else {
+            iconVol.style.display = "";
+            iconMute.style.display = "none";
+        }
+    }
+
+    muteBtn && muteBtn.addEventListener("click", () => {
         video.muted = !video.muted;
-        muteBtn.textContent = video.muted ? "🔇" : "🔊";
-    };
+        if (!video.muted && video.volume === 0) video.volume = 0.08;
+        volumeSlider && (volumeSlider.value = video.volume);
+        updateMuteIcon();
+        resetHideTimer();
+    });
 
-
-    /* SPEED */
+    /* ---- Speed ---- */
     const rates = [1, 1.25, 1.5, 2];
     let rIndex = 0;
-
-    speedBtn.onclick = () => {
+    speedBtn && speedBtn.addEventListener("click", () => {
         rIndex = (rIndex + 1) % rates.length;
         video.playbackRate = rates[rIndex];
         speedBtn.textContent = rates[rIndex] + "x";
-    };
+        resetHideTimer();
+    });
 
+    /* ---- Fullscreen ---- */
+    fullscreenBtn && fullscreenBtn.addEventListener("click", async () => {
+        try {
+            if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+            else await document.exitFullscreen();
+        } catch {}
+        resetHideTimer();
+    });
 
-    /* FULLSCREEN */
-    fullscreenBtn.onclick = async () => {
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-        else document.exitFullscreen();
-    };
-
-
-    /* NEXT EPISODE */
-    nextEpBtn.onclick = () => {
+    /* ---- Next episode ---- */
+    nextEpBtn && nextEpBtn.addEventListener("click", () => {
         const next = episodeNum + 1;
-        if (next <= 8) {
+        if (next <= 8 && rawSrc) {
             const newSrc = rawSrc.replace(/ep(\d+)/i, `ep${next}`);
             location.href = `player.html?src=${encodeURIComponent(newSrc)}`;
+        } else {
+            alert("No next episode available.");
         }
-    };
+    });
 
-
-    /* -----------------------------------------------------
-       PROGRESS BAR
-    ----------------------------------------------------- */
+    /* ---- Progress bar ---- */
     video.addEventListener("timeupdate", () => {
         if (!video.duration) return;
-
         const pct = (video.currentTime / video.duration) * 100;
         progressFill.style.width = pct + "%";
-        currentTimeEl.textContent =
-            formatTime(video.currentTime) + " / " + formatTime(video.duration);
+        currentTimeEl.textContent = formatTime(video.currentTime) + " / " + formatTime(video.duration);
     });
 
     video.addEventListener("progress", () => {
@@ -167,16 +184,17 @@
                 const b = video.buffered.end(video.buffered.length - 1);
                 progressBuffer.style.width = (b / video.duration) * 100 + "%";
             }
-        } catch { }
+        } catch {}
     });
 
-    progressContainer.onclick = e => {
+    progressContainer && progressContainer.addEventListener("click", (e) => {
         const rect = progressContainer.getBoundingClientRect();
         const pct = (e.clientX - rect.left) / rect.width;
         video.currentTime = pct * video.duration;
-    };
+        resetHideTimer();
+    });
 
-    progressContainer.onmousemove = e => {
+    progressContainer && progressContainer.addEventListener("mousemove", (e) => {
         const rect = progressContainer.getBoundingClientRect();
         let x = e.clientX - rect.left;
         x = Math.max(0, Math.min(rect.width, x));
@@ -184,141 +202,125 @@
         progressHover.textContent = formatTime(pct * video.duration);
         progressHover.style.left = x + "px";
         progressHover.style.opacity = 1;
-    };
+    });
 
-    progressContainer.onmouseleave = () =>
+    progressContainer && progressContainer.addEventListener("mouseleave", () => {
         progressHover.style.opacity = 0;
+    });
 
-
-    /* -----------------------------------------------------
-       UI AUTO-HIDE  (header + back arrow + controls)
-    ----------------------------------------------------- */
+    /* ---- Auto-hide UI ---- */
     let hideTimer = null;
-
     function showUI() {
         document.body.classList.remove("hide-ui");
         controls.classList.add("show");
     }
-
     function hideUI() {
         if (!video.paused) {
             document.body.classList.add("hide-ui");
             controls.classList.remove("show");
         }
     }
-
     function resetHideTimer() {
         showUI();
         clearTimeout(hideTimer);
         hideTimer = setTimeout(hideUI, 2500);
     }
-
     document.addEventListener("mousemove", resetHideTimer);
     document.addEventListener("keydown", resetHideTimer);
 
-
-    /* -----------------------------------------------------
-       TOUCH GESTURES (NEW FEATURE)
-    ----------------------------------------------------- */
+    /* ---- Gestures ---- */
     let lastTapLeft = 0;
     let lastTapRight = 0;
 
-    /* Double-tap left = rewind */
-    gLeft.addEventListener("touchend", () => {
+    // left double-tap -> rewind 15s
+    gLeft && gLeft.addEventListener("touchend", (ev) => {
         const now = Date.now();
         if (now - lastTapLeft < 300) {
             video.currentTime = Math.max(0, video.currentTime - 15);
-            showGesture("+15", true);
+            showGesture("⟲ 15s");
         }
         lastTapLeft = now;
         resetHideTimer();
     });
 
-    /* Double-tap right = forward */
-    gRight.addEventListener("touchend", () => {
+    // right double-tap -> forward 15s
+    gRight && gRight.addEventListener("touchend", (ev) => {
         const now = Date.now();
         if (now - lastTapRight < 300) {
-            video.currentTime = Math.min(video.duration, video.currentTime + 15);
-            showGesture("+15");
+            video.currentTime = Math.min(video.duration || Infinity, video.currentTime + 15);
+            showGesture("15s ⟳");
         }
         lastTapRight = now;
         resetHideTimer();
     });
 
-
-    /* Single tap center = toggle UI */
-    gCenter.addEventListener("touchend", () => {
+    // center single tap -> toggle UI
+    gCenter && gCenter.addEventListener("touchend", (ev) => {
         if (document.body.classList.contains("hide-ui")) showUI();
         else hideUI();
     });
 
-
-    /* Volume swipe (vertical) inside right zone */
+    // vertical swipe on right zone -> volume
     let startY = 0;
     let startVol = 0;
-
-    gRight.addEventListener("touchstart", e => {
+    gRight && gRight.addEventListener("touchstart", (e) => {
         const t = e.touches[0];
         startY = t.clientY;
         startVol = video.volume;
-    });
+    }, {passive:true});
 
-    gRight.addEventListener("touchmove", e => {
+    gRight && gRight.addEventListener("touchmove", (e) => {
         const t = e.touches[0];
-        const dy = startY - t.clientY;  // up = +volume
-
+        const dy = startY - t.clientY; // up increases
         const newVol = Math.max(0, Math.min(1, startVol + dy / 300));
         video.volume = newVol;
         video.muted = newVol === 0;
-        volumeSlider.value = newVol;
-
+        if (volumeSlider) volumeSlider.value = newVol;
+        updateMuteIcon();
         showVolume(Math.round(newVol * 100));
-    });
+        resetHideTimer();
+    }, {passive:true});
 
-
-    /* -----------------------------------------------------
-       GESTURE FEEDBACK (TEMP HUD)
-    ----------------------------------------------------- */
-
+    /* ---- Feedback ------ */
     let feedbackTimeout = null;
-
-    function showVolume(percent) {
-        gestureFeedback.textContent = percent + "%";
+    function showVolume(pct) {
+        gestureFeedback.textContent = pct + "%";
         gestureFeedback.style.opacity = 1;
-
         clearTimeout(feedbackTimeout);
-        feedbackTimeout = setTimeout(() => {
-            gestureFeedback.style.opacity = 0;
-        }, 600);
+        feedbackTimeout = setTimeout(()=> gestureFeedback.style.opacity = 0, 700);
+    }
+    function showGesture(txt) {
+        gestureFeedback.textContent = txt;
+        gestureFeedback.style.opacity = 1;
+        clearTimeout(feedbackTimeout);
+        feedbackTimeout = setTimeout(()=> gestureFeedback.style.opacity = 0, 700);
     }
 
-    function showGesture(txt, isBack = false) {
-        gestureFeedback.textContent = isBack ? "⟲ 15s" : "15s ⟳";
-        gestureFeedback.style.opacity = 1;
+    /* ---- Keyboard shortcuts (spacebar fix + others) ---- */
+    document.addEventListener("keydown", (e) => {
+        // ensure inputs are not focused (so space doesn't type into range)
+        const active = document.activeElement;
+        const isInput = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+        if (isInput) return;
 
-        clearTimeout(feedbackTimeout);
-        feedbackTimeout = setTimeout(() => {
-            gestureFeedback.style.opacity = 0;
-        }, 600);
-    }
-
-
-    /* -----------------------------------------------------
-       Keyboard Shortcuts
-    ----------------------------------------------------- */
-    document.addEventListener("keydown", e => {
         if (e.code === "Space") {
             e.preventDefault();
-            video.paused ? video.play() : video.pause();
+            if (video.paused) video.play();
+            else video.pause();
+            updatePlayIcon();
+            resetHideTimer();
         }
-        if (e.code === "ArrowRight") video.currentTime += 10;
-        if (e.code === "ArrowLeft") video.currentTime -= 10;
+        if (e.code === "ArrowRight") { video.currentTime += 10; resetHideTimer(); }
+        if (e.code === "ArrowLeft") { video.currentTime -= 10; resetHideTimer(); }
+        if (e.key.toLowerCase() === "f") {
+            document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+            resetHideTimer();
+        }
     });
 
-
-    /* -----------------------------------------------------
-       INITIAL
-    ----------------------------------------------------- */
+    /* ---- init ---- */
+    updateMuteIcon();
+    updatePlayIcon();
     resetHideTimer();
     safePlay();
 
