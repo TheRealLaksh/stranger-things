@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Episode Release Countdown</title>
+
+    <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
+
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;600;800&family=Black+Ops+One&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            color: #e50914;
+            font-family: "Courier Prime", monospace;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .glow {
+            text-shadow: 0 0 15px rgba(229, 9, 20, 0.8), 0 0 30px rgba(229, 9, 20, 0.5);
+        }
+
+        .episode-title {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-family: "Black Ops One", cursive;
+            letter-spacing: 2px;
+        }
+
+        .countdown-box {
+            font-size: 2.5rem;
+            border: 2px solid #e50914;
+            padding: 25px 40px;
+            border-radius: 10px;
+            background: rgba(20, 0, 0, 0.6);
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .poster {
+            width: 400px;
+            border: 3px solid #e50914;
+            border-radius: 6px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.5);
+        }
+
+        .label {
+            font-size: 1.1rem;
+            color: #bbb;
+            margin-bottom: 5px;
+        }
+
+        .release-date {
+            font-size: 1rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            margin-top: 40px;
+            padding: 12px 25px;
+            background: #111;
+            border: 2px solid #e50914;
+            color: #e50914;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            background: #e50914;
+            color: #000;
+        }
+
+        .crt {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                rgba(255,255,255,0.04),
+                rgba(255,255,255,0.04) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            opacity: 0.15;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="crt"></div>
+
+<img id="poster" class="poster" src="" alt="Episode Poster">
+
+<div class="episode-title glow" id="epTitle"></div>
+
+<div class="label">RELEASE IN</div>
+
+<div class="countdown-box glow" id="countdown">Loading…</div>
+
+<div class="release-date" id="releaseDateLabel"></div>
+
+<button class="btn-back" onclick="location.href='library.html'">← RETURN TO ARCHIVE</button>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const ep = parseInt(params.get("ep"), 10);
+
+    const titles = {
+        5: "CASE 05 — SHOCK JOCK",
+        6: "CASE 06 — CAMAZOTZ",
+        7: "CASE 07 — THE BRIDGE",
+        8: "CASE 08 — RIGHTSIDE UP"
+    };
+
+    const poster = `assets/images/ep${ep}.jpg`;
+
+    let releaseTime;
+
+    if (ep === 8) {
+        releaseTime = new Date("2025-12-31T23:00:00+05:30");
+    } else {
+        releaseTime = new Date("2025-12-25T06:30:00+05:30");
+    }
+
+    document.getElementById("poster").src = poster;
+    document.getElementById("epTitle").textContent = titles[ep];
+
+    const releaseLabel = releaseTime.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+    document.getElementById("releaseDateLabel").textContent = `Releasing on: ${releaseLabel} IST`;
+
+    function updateCountdown() {
+        const now = new Date();
+        const diff = releaseTime - now;
+
+        if (diff <= 0) {
+            document.getElementById("countdown").textContent = "AVAILABLE NOW";
+            setTimeout(() => {
+                location.href = `player.html?src=assets/episodes/ep${ep}.mp4`;
+            }, 2000);
+            return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("countdown").textContent =
+            `${d}d ${h}h ${m}m ${s}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+
+</body>
+</html>

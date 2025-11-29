@@ -166,7 +166,7 @@
         <div class="folder-tab red-tab mt-16">FOLDER B: THE APOCALYPSE</div>
         <div class="file-grid">
 
-            <div class="case-file" onclick="location.href='player.html?src=assets/episodes/ep5.mp4'">
+            <div class="case-file" onclick="openEpisode(5)">
                 <div class="file-status">CONFIDENTIAL</div>
                 <div class="file-visual">
                     <img src="assets/images/ep5.jpg" alt="Evidence 5">
@@ -186,7 +186,7 @@
                 </div>
             </div>
 
-            <div class="case-file" onclick="location.href='player.html?src=assets/episodes/ep6.mp4'">
+            <div class="case-file" onclick="openEpisode(6)">
                 <div class="file-status warning">CRITICAL</div>
                 <div class="file-visual">
                     <img src="assets/images/ep6.jpg" alt="Evidence 6">
@@ -206,7 +206,7 @@
                 </div>
             </div>
 
-            <div class="case-file" onclick="location.href='player.html?src=assets/episodes/ep7.mp4'">
+            <div class="case-file" onclick="openEpisode(7)">
                 <div class="file-status">CONFIDENTIAL</div>
                 <div class="file-visual">
                     <img src="assets/images/ep7.jpg" alt="Evidence 7">
@@ -226,7 +226,7 @@
                 </div>
             </div>
 
-            <div class="case-file" onclick="location.href='player.html?src=assets/episodes/ep8.mp4'">
+            <div class="case-file" onclick="openEpisode(8)">
                 <div class="file-status warning">TERMINATED</div>
                 <div class="file-visual">
                     <img src="assets/images/ep8.jpg" alt="Evidence 8">
@@ -368,6 +368,19 @@
     <script src="js/app.js"></script>
     <script src="js/animations.js"></script>
     <script src="js/library.js"></script>
+    <script>
+        function openEpisode(num) {
+            // Episodes 1-4 are released
+            if (num <= 4) {
+                location.href = `player.html?src=assets/episodes/ep${num}.mp4`;
+                return;
+            }
+
+            // Episodes 5–8 → unreleased
+            location.href = `countdown.html?ep=${num}`;
+        }
+    </script>
+
 
 </body>
 
