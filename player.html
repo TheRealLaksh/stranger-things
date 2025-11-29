@@ -7,7 +7,7 @@
     <title>Stranger Things — Player</title>
     <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
 
-    <!-- Styles (existing) -->
+    <!-- Styles -->
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/components.css">
@@ -31,14 +31,23 @@
             <p id="episodeMeta">Now Playing</p>
         </div>
 
-        <!-- VIDEO ELEMENT -->
+        <!-- VIDEO LAYER -->
         <div class="video-container">
             <video id="videoPlayer" class="video" preload="auto">
                 <source id="videoSource" src="" type="video/*">
                 Your browser does not support the video tag.
             </video>
         </div>
-        
+
+
+        <!-- 🎯 NEW GESTURE OVERLAYS -->
+        <div class="gesture-zone" id="gesture-left"></div>
+        <div class="gesture-zone" id="gesture-right"></div>
+        <div class="gesture-zone" id="gesture-center"></div>
+
+        <!-- TEMP FEEDBACK (volume, skip indicators) -->
+        <div id="gestureFeedback" class="gesture-feedback">100%</div>
+
 
         <!-- CONTROLS -->
         <div class="controls-container" id="controls">
@@ -50,7 +59,6 @@
                 <div class="right-top">
                     <span id="currentTime">0:00</span>
                 </div>
-                
             </div>
 
             <!-- Progress Bar -->

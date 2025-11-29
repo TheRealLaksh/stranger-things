@@ -1,5 +1,5 @@
 /* =========================================================
-   NETFLIX-STYLE PLAYER — VISUALS ONLY
+   BASE PLAYER LAYOUT
    ========================================================= */
 
 .player-wrapper {
@@ -10,7 +10,15 @@
     overflow: hidden;
 }
 
-/* Video */
+.video-container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+}
+
 .video {
     width: 100%;
     height: 100%;
@@ -18,18 +26,24 @@
     background: black;
 }
 
-/* Title overlay */
+
+
+/* =========================================================
+   TITLE / HEADER
+   ========================================================= */
+
 .player-header {
     position: absolute;
-    top: 100px;
-    left: 50px;
-    z-index: 20;
+    top: 90px;
+    left: 40px;
+    z-index: 40;
     color: white;
-    opacity: 0.95;
+    opacity: 1;
+    transition: opacity 0.25s ease;
 }
 
 .player-header h1 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin: 0;
     font-family: "Cinzel Decorative", serif;
 }
@@ -39,44 +53,111 @@
     margin-top: 6px;
 }
 
-/* CONTROLS BASE */
+
+/* =========================================================
+   BACK ARROW (TOP LEFT)
+   ========================================================= */
+
+.back-arrow {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 120;
+    background: rgba(0, 0, 0, 0.55);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: opacity 0.25s ease, background 0.2s ease;
+}
+
+
+/* =========================================================
+   GESTURE ZONES (NEW)
+   ========================================================= */
+
+.gesture-zone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 30;
+    pointer-events: auto;
+}
+
+/* left 33% */
+#gesture-left {
+    left: 0;
+    width: 33.33%;
+}
+
+/* right 33% */
+#gesture-right {
+    right: 0;
+    width: 33.33%;
+}
+
+/* center 34% */
+#gesture-center {
+    left: 33.33%;
+    width: 33.33%;
+}
+
+/* Feedback (volume %, skip text) */
+.gesture-feedback {
+    position: absolute;
+    left: 50%;
+    top: 42%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.55);
+    padding: 14px 24px;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    opacity: 0;
+    z-index: 200;
+    transition: opacity 0.18s ease;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTROLS
+   ========================================================= */
+
 .controls-container {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 30px;
+    padding: 24px;
     opacity: 0;
-    transition: opacity 0.35s ease;
     pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 45;
 }
 
 .controls-container.show {
     opacity: 1;
-    pointer-events: all;
+    pointer-events: auto;
 }
 
-/* TOP CONTROLS (timer + back) */
 .top-controls {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    align-items: center;
 }
 
-#backButton {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-/* BUTTONS */
 .ctrl-btn {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
     border: none;
-    color: white;
-    padding: 8px 14px;
+    padding: 8px 10px;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 0.9rem;
     transition: background 0.2s ease;
 }
 
@@ -85,178 +166,24 @@
 }
 
 .big-btn {
-    font-size: 1.3rem;
-    padding: 12px 18px;
-}
-
-.small-btn {
-    padding: 6px 10px;
-    font-size: 0.8rem;
-}
-
-/* BOTTOM CONTROLS */
-.bottom-controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 10px;
-}
-
-.right-controls {
-    margin-left: auto;
-    display: flex;
-    gap: 12px;
-}
-
-/* VOLUME SLIDER */
-#volumeSlider {
-    width: 120px;
-}
-
-/* PROGRESS BAR */
-.progress-container {
-    position: relative;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.2);
-    cursor: pointer;
-    margin: 12px 0;
-    border-radius: 4px;
-}
-
-.progress-bar {
-    position: absolute;
-    inset: 0;
-    border-radius: 4px;
-}
-
-.progress-fill {
-    height: 6px;
-    width: 0%;
-    background: var(--red);
-    border-radius: 4px;
-}
-
-.progress-buffer {
-    height: 6px;
-    width: 0%;
-    background: rgba(255, 255, 255, 0.45);
-    border-radius: 4px;
-}
-
-.progress-hover {
-    position: absolute;
-    top: -20px;
-    height: 20px;
-    width: 40px;
-    color: white;
-    font-size: 0.8rem;
-    text-align: center;
-    opacity: 0;
-    transition: 0.2s ease;
-}
-
-/* FULLSCREEN FIX */
-:fullscreen video {
-    object-fit: contain;
-}
-
-/* Cursor hide */
-body.hide-cursor {
-    cursor: none;
-}
-
-.video-container {
-    position: absolute;
-    inset: 0;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: black;
-}
-
-/* Back arrow top-left */
-.back-arrow {
-    position: fixed;
-    top: 18px;
-    left: 18px;
-    z-index: 120;
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    backdrop-filter: blur(6px);
-}
-
-/* ensure controls container overlays video */
-.video-container {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: black;
-}
-
-.video {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: black;
-}
-
-/* controls visible class */
-.controls-container {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 22px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .25s ease;
-}
-
-.controls-container.show {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-/* small polish for top/back buttons */
-.ctrl-btn {
-    background: rgba(0, 0, 0, 0.45);
-    color: #fff;
-    border: none;
-    padding: 8px 10px;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.big-btn {
     font-size: 1.1rem;
     padding: 10px 14px;
 }
 
 .small-btn {
-    font-size: .9rem;
+    font-size: 0.9rem;
     padding: 6px 8px;
 }
 
-/* progress */
+
+/* =========================================================
+   PROGRESS BAR
+   ========================================================= */
+
 .progress-container {
     position: relative;
     height: 10px;
-    margin: 8px 0 12px;
+    margin: 10px 0 14px;
     display: flex;
     align-items: center;
 }
@@ -264,7 +191,7 @@ body.hide-cursor {
 .progress-bar {
     position: relative;
     height: 6px;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.18);
     border-radius: 6px;
     width: 100%;
     overflow: hidden;
@@ -277,6 +204,7 @@ body.hide-cursor {
     height: 6px;
     width: 0%;
     background: rgba(255, 255, 255, 0.25);
+    transition: width 0.15s;
 }
 
 .progress-fill {
@@ -286,9 +214,9 @@ body.hide-cursor {
     height: 6px;
     width: 0%;
     background: var(--red);
+    transition: width 0.1s linear;
 }
 
-/* hover time preview */
 .progress-hover {
     position: absolute;
     top: -26px;
@@ -304,62 +232,80 @@ body.hide-cursor {
     transition: opacity .12s ease;
 }
 
-/* top controls layout */
-.top-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
 
-/* right side controls cluster */
+/* =========================================================
+   RIGHT CONTROLS
+   ========================================================= */
+
 .right-controls {
+    margin-left: auto;
     display: flex;
     gap: 12px;
     align-items: center;
 }
-/* ----------------------------
-   Top Left Back Arrow Button
------------------------------ */
 
-.back-arrow {
-    position: fixed;
-    top: 22px;
-    left: 26px;
-    z-index: 9999;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(6px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
 
-    border: 1px solid rgba(255, 255, 255, 0.18);
+/* =========================================================
+   UI AUTO-HIDE CLASSES
+   ========================================================= */
 
-    transition:
-        background 0.2s ease,
-        transform 0.15s ease,
-        border-color 0.2s ease;
-}
-
-.back-arrow:hover {
-    background: rgba(0, 0, 0, 0.75);
-    border-color: rgba(255, 255, 255, 0.35);
-    transform: scale(1.05);
-}
-
-.back-arrow svg {
-    width: 22px;
-    height: 22px;
-    fill: white;
+.hide-ui .player-header {
+    opacity: 0;
     pointer-events: none;
-    opacity: 0.9;
-    transition: opacity 0.2s ease;
 }
 
-.back-arrow:hover svg {
-    opacity: 1;
+.hide-ui .back-arrow {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hide-ui .controls-container {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE (MOBILE-FIRST)
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .player-header {
+        top: 60px;
+        left: 20px;
+    }
+
+    .player-header h1 {
+        font-size: 1.45rem;
+    }
+
+    #gestureFeedback {
+        font-size: 1rem;
+        padding: 10px 18px;
+    }
+
+    .ctrl-btn {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
+
+    .big-btn {
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
+
+    .bottom-controls {
+        gap: 8px;
+    }
+
+    #volumeSlider {
+        width: 90px;
+    }
+
+    .back-arrow {
+        top: 14px;
+        left: 14px;
+        padding: 6px 8px;
+    }
 }
