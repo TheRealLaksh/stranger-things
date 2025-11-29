@@ -6,7 +6,6 @@
     <title>Episode Release Countdown</title>
 
     <link rel="icon" type="image/jpeg" href="assets/images/favicon.jpg">
-
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Inter:wght@400;600;800&family=Black+Ops+One&display=swap" rel="stylesheet">
 
     <style>
@@ -17,57 +16,128 @@
             color: #e50914;
             font-family: "Courier Prime", monospace;
             height: 100vh;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            flex-direction: column;
         }
 
-        .glow {
-            text-shadow: 0 0 15px rgba(229, 9, 20, 0.8), 0 0 30px rgba(229, 9, 20, 0.5);
+        /* --- U P S I D E   D O W N   S P O R E S --- */
+        .spore {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 0, 0, 0.7);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
         }
 
-        .episode-title {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            font-family: "Black Ops One", cursive;
-            letter-spacing: 2px;
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 0.4; }
+            50% { transform: translateY(-60px) scale(1.5); opacity: 1; }
+            100% { transform: translateY(0) scale(1); opacity: 0.4; }
         }
 
-        .countdown-box {
-            font-size: 2.5rem;
-            border: 2px solid #e50914;
-            padding: 25px 40px;
-            border-radius: 10px;
-            background: rgba(20, 0, 0, 0.6);
-            margin-top: 20px;
-            display: inline-block;
+        /* CRT LINES */
+        .crt {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                rgba(255,255,255,0.04),
+                rgba(255,255,255,0.04) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            opacity: 0.17;
+            z-index: 200;
         }
 
+        /* GRAIN */
+        .grain {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://i.imgur.com/o9K4rEW.png');
+            opacity: 0.07;
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            animation: noise 0.2s infinite;
+            z-index: 201;
+        }
+        @keyframes noise {
+            0% { transform: translate(0,0); }
+            25% { transform: translate(-5px,3px); }
+            50% { transform: translate(4px,-4px); }
+            75% { transform: translate(-3px,2px); }
+            100% { transform: translate(0,0); }
+        }
+
+        /* POSTER */
         .poster {
-            width: 400px;
+            width: 420px;
             border: 3px solid #e50914;
             border-radius: 6px;
             margin-bottom: 25px;
-            box-shadow: 0 0 25px rgba(229, 9, 20, 0.5);
+            box-shadow: 0 0 35px rgba(229, 9, 20, 0.6);
+            animation: zoomSlow 10s infinite ease-in-out;
+        }
+        @keyframes zoomSlow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        /* TITLE */
+        .episode-title {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-family: "Black Ops One", cursive;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(229,9,20,0.9);
+            animation: flicker 2s infinite;
+            z-index: 50;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.75; }
+            52% { opacity: 1; }
+            55% { opacity: 0.3; }
+            57% { opacity: 1; }
+            100% { opacity: 1; }
         }
 
         .label {
-            font-size: 1.1rem;
-            color: #bbb;
             margin-bottom: 5px;
+            color: #bbb;
+            font-size: 1.2rem;
+        }
+
+        .countdown-box {
+            font-size: 2.6rem;
+            padding: 25px 40px;
+            border: 2px solid #e50914;
+            background: rgba(20, 0, 0, 0.6);
+            border-radius: 10px;
+            margin-top: 10px;
+            animation: glowPulse 2s infinite;
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 10px rgba(229,9,20,0.4); }
+            50% { box-shadow: 0 0 25px rgba(229,9,20,0.9); }
+            100% { box-shadow: 0 0 10px rgba(229,9,20,0.4); }
         }
 
         .release-date {
             font-size: 1rem;
-            color: #888;
-            margin-top: 10px;
+            margin-top: 15px;
+            color: #777;
         }
 
         .btn-back {
-            margin-top: 40px;
-            padding: 12px 25px;
+            margin-top: 35px;
+            padding: 12px 30px;
             background: #111;
             border: 2px solid #e50914;
             color: #e50914;
@@ -79,34 +149,45 @@
         .btn-back:hover {
             background: #e50914;
             color: #000;
+            transform: scale(1.1);
         }
 
-        .crt {
+        /* Glitch flash before redirect */
+        @keyframes breach {
+            0% { opacity: 0; }
+            50% { opacity: 1; background:white; }
+            100% { opacity: 0; }
+        }
+        #breachFlash {
             position: absolute;
             inset: 0;
-            background: repeating-linear-gradient(
-                rgba(255,255,255,0.04),
-                rgba(255,255,255,0.04) 2px,
-                transparent 2px,
-                transparent 4px
-            );
+            background: white;
+            opacity: 0;
             pointer-events: none;
-            opacity: 0.15;
+            z-index: 300;
         }
     </style>
 </head>
 
 <body>
 
+<!-- Spores -->
+<div class="spore" style="top:20%; left:25%; animation-delay:0s;"></div>
+<div class="spore" style="top:60%; left:70%; animation-delay:1s;"></div>
+<div class="spore" style="top:40%; left:50%; animation-delay:2s;"></div>
+<div class="spore" style="top:75%; left:30%; animation-delay:3s;"></div>
+
 <div class="crt"></div>
+<div class="grain"></div>
+<div id="breachFlash"></div>
 
 <img id="poster" class="poster" src="" alt="Episode Poster">
 
-<div class="episode-title glow" id="epTitle"></div>
+<div class="episode-title" id="epTitle"></div>
 
 <div class="label">RELEASE IN</div>
 
-<div class="countdown-box glow" id="countdown">Loading…</div>
+<div class="countdown-box" id="countdown">Loading…</div>
 
 <div class="release-date" id="releaseDateLabel"></div>
 
@@ -145,9 +226,12 @@
 
         if (diff <= 0) {
             document.getElementById("countdown").textContent = "AVAILABLE NOW";
+
+            document.getElementById("breachFlash").style.animation = "breach 1s forwards";
+
             setTimeout(() => {
                 location.href = `player.html?src=assets/episodes/ep${ep}.mp4`;
-            }, 2000);
+            }, 1200);
             return;
         }
 
@@ -156,8 +240,12 @@
         const m = Math.floor((diff / (1000 * 60)) % 60);
         const s = Math.floor((diff / 1000) % 60);
 
-        document.getElementById("countdown").textContent =
-            `${d}d ${h}h ${m}m ${s}s`;
+        const countdown = document.getElementById("countdown");
+
+        countdown.textContent = `${d}d ${h}h ${m}m ${s}s`;
+
+        countdown.style.transform = "scale(1.08)";
+        setTimeout(() => countdown.style.transform = "scale(1)", 120);
     }
 
     setInterval(updateCountdown, 1000);
