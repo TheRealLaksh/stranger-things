@@ -46,8 +46,11 @@
         7: "The Bridge",
         8: "The Rightside Up"
     };
+
+
     (async () => {
 
+        // DAILY PASSWORD CHECK
         async function requireDailyPassword() {
             const pass = prompt("Enter today's password:");
             if (!pass) return location.href = "index.html";
@@ -344,5 +347,5 @@
         safePlay();
 
     })();
-})(); // end wrapper
+
 
